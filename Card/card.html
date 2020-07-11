@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+    <link rel="stylesheet" href="card.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>bilibili</h1>
+        <form action="">
+            <input type="text" class="tbx" placeholder="点赞">
+            <input type="password" class="tbx" placeholder="投币">
+            <input type="submit" class="sub" value="一键三连">
+        </form>
+    </div>
+</body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
+<script>
+    //定义一个con绑定.container
+    const con = document.querySelector('.container');
+    //定义两个函数开关
+    let isIn = true; //鼠标进去时候的开关，默认打开
+    let isOut = false; //出来时候的开关，默认关闭
+
+    //定义未生成的元素
+    var span;
+    //监听鼠标进去时候的事件+进去的方法
+    con.addEventListener('mouseenter', (e) => {
+        if (isIn) { //如果进去时候的开关时打开的，就可以执行这个函数
+
+            //获取进入的鼠标位置
+            //生成元素的位置=进入点距离窗口的距离-父盒子距离窗口的距离
+            let inx = e.clientX - e.target.offsetLeft;
+            let iny = e.clientY - e.target.offsetTop;
+            let el = document.createElement('span');
+            el.style.left = inx + 'px';
+            el.style.top = iny + 'px';
+            con.appendChild(el);
+            $('.container span').removeClass('out');
+            $('.container span').addClass('in');
+            span = document.querySelector('.container span');
+            isIn = false;
+            isOut = true;
+        }
+    })
+    con.addEventListener('mouseleave', (e) => {
+        if (isOut) {
+            let inx = e.clientX - e.target.offsetLeft;
+            let iny = e.clientY - e.target.offsetTop;
+
+            $('.container span').removeClass('in');
+            $('.container span').addClass('out');
+            $('.out').css('left', inx + 'px');
+            $('.out').css('top', iny + 'px');
+            isOut = false;
+            setTimeout(() => {
+                con.removeChild(span);
+                isIn = true;
+            }, 500)
+        }
+    })
+</script>
+
+</html>
